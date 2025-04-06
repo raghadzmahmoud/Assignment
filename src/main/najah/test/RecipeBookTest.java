@@ -12,13 +12,13 @@ import main.najah.code.Recipe;
 import main.najah.code.RecipeBook;
 import main.najah.code.RecipeException;
 
-import java.time.LocalTime;
 import java.util.concurrent.TimeUnit;
 @DisplayName("Testing Product Methods")
 class RecipeBookTest {
 
     private RecipeBook recipeBook;
     private Recipe recipe;
+    
 
     @BeforeEach
     void setUp() {
@@ -39,14 +39,12 @@ class RecipeBookTest {
     @Test
     @DisplayName("Valid Input: Add a recipe successfully")
     void testAddRecipeValid() {
-        System.out.println("Starting testAddRecipeValid at " + LocalTime.now());
         assertTrue(recipeBook.addRecipe(recipe), "Recipe should be added successfully");
     }
 
     @Test
     @DisplayName("Invalid Input: Add a duplicate recipe (should fail)")
     void testAddDuplicateRecipe() {
-        System.out.println("Starting testAddDuplicateRecipe at " + LocalTime.now());
 
         recipeBook.addRecipe(recipe);
         assertFalse(recipeBook.addRecipe(recipe), "Duplicate recipe should not be added");
@@ -55,7 +53,6 @@ class RecipeBookTest {
     @Test
     @DisplayName("Valid Input: Delete an existing recipe successfully")
     void testDeleteRecipeValid() {
-        System.out.println("Starting testDeleteRecipeValid at " + LocalTime.now());
 
         recipeBook.addRecipe(recipe);
         assertEquals("Latte", recipeBook.deleteRecipe(0), "Deleted recipe name should match");
@@ -94,8 +91,8 @@ class RecipeBookTest {
     }
 
     @Test
-    @Timeout(value = 1, unit = TimeUnit.SECONDS)
-    @DisplayName("Performance Test: Adding recipes should complete within 1 second")
+    @Timeout(value = 20, unit = TimeUnit.MILLISECONDS)
+    @DisplayName("Performance Test: Adding recipes should complete within 20 MILLISECONDS")
     void testAddRecipePerformance() {
         for (int i = 0; i < 4; i++) {
             Recipe newRecipe = new Recipe();

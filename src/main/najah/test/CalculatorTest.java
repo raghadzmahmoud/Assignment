@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
@@ -42,15 +43,16 @@ public class CalculatorTest {
 
     @Test
     @Order(2)
-    @DisplayName("Addition: Invalid Input (Edge Cases)")
+    @DisplayName("Addition: Edge Inputs (Single/Negative/Zero Sum)")
     void testAdditionInvalid() {
 
         assertAll(
-            () -> assertEquals(0, calculator.add(-2, 2)), // Should be zero
-            () -> assertEquals(10, calculator.add(10)), // Single value
-            () -> assertEquals(-100, calculator.add(-100)) // Single negative value
+            () -> assertEquals(0, calculator.add(-2, 2)),
+            () -> assertEquals(10, calculator.add(10)), 
+            () -> assertEquals(-100, calculator.add(-100)) 
         );
     }
+
 
     @Test
     @Order(3)
@@ -97,14 +99,14 @@ public class CalculatorTest {
 
     @Test
     @Order(7)
-    @Timeout(value = 2, unit = TimeUnit.SECONDS)
+    @Timeout(value = 1, unit = TimeUnit.SECONDS)
     @DisplayName("Performance: Large Addition Calculation")
     void testAdditionPerformance() {
-        int[] largeNumbers = new int[1000];
-        for (int i = 0; i < 1000; i++) {
+        int[] largeNumbers = new int[10000];
+        for (int i = 0; i < 10000; i++) {
             largeNumbers[i] = i + 1;
         }
-        assertEquals(500500, calculator.add(largeNumbers));
+        assertEquals(50005000, calculator.add(largeNumbers));
     }
 
     @Test
@@ -113,5 +115,12 @@ public class CalculatorTest {
     @DisplayName("Performance: Factorial Calculation")
     void testFactorialPerformance() {
         assertDoesNotThrow(() -> calculator.factorial(20));
+    }
+    @Test
+    @Order(9)
+    @Disabled("Fails because calculator.add doesn't handle null values. Consider adding null check inside the method.")
+    @DisplayName("Addition: Fails When Input is Null")
+    void testAdditionFailsWithNull() {
+        assertEquals(0, calculator.add((int[]) null)); 
     }
 }

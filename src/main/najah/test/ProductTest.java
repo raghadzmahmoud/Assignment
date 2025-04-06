@@ -58,8 +58,7 @@ public class ProductTest {
     @DisplayName("Creation: Invalid Price")
     void testCreationInvalid() {
 
-        assertThrows(IllegalArgumentException.class,
-            () -> new Product("Invalid", -50.0));
+        assertThrows(IllegalArgumentException.class,() -> new Product("Invalid", -50.0));
     }
 
     @Test
@@ -77,10 +76,8 @@ public class ProductTest {
     @DisplayName("Discount: Invalid Applications")
     void testInvalidDiscounts() {
         assertAll(
-            () -> assertThrows(IllegalArgumentException.class,
-                () -> product.applyDiscount(-1.0)),
-            () -> assertThrows(IllegalArgumentException.class,
-                () -> product.applyDiscount(50.1))
+            () -> assertThrows(IllegalArgumentException.class,() -> product.applyDiscount(-1.0)),
+            () -> assertThrows(IllegalArgumentException.class,() -> product.applyDiscount(51))
         );
     }
 
